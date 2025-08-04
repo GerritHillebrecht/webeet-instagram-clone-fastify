@@ -56,3 +56,8 @@ profile-*
 profile*
 *clinic*
 *flamegraph*
+
+# SQLite database files
+*.sqlite
+*.sqlite3
+*.db
