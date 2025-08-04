@@ -3,6 +3,10 @@ logs
 *.log
 npm-debug.log*
 
+# Environment variables
+.env
+.env.*
+
 # Runtime data
 pids
 *.pid
@@ -56,3 +60,8 @@ profile-*
 profile*
 *clinic*
 *flamegraph*
+
+# SQLite database files
+*.sqlite
+*.sqlite3
+*.db
