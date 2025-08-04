@@ -10,6 +10,20 @@ const postsService = (fastify: FastifyInstance) => {
             const post = fastify.transactions.posts.create(postData)
             return post
         },
+        getAll: async () => {
+            fastify.log.info(`Fetching all posts`)
+            // This will use the MOCK `transactions` in our test,
+            // and the REAL `transactions` in our live application.
+            const posts = fastify.transactions.posts.getAll()
+            return posts
+        },
+        getById: async (id: number) => {
+            fastify.log.info(`Fetching post with ID: ${id}`)
+            // This will use the MOCK `transactions` in our test,
+            // and the REAL `transactions` in our live application.
+            const post = fastify.transactions.posts.getById(id)
+            return post
+        },
     }
 }
 
