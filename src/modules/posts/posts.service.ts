@@ -4,10 +4,11 @@ import { CreatePostDto } from "./posts.types"
 const postsService = (fastify: FastifyInstance) => {
     return {
         create: async (postData: CreatePostDto) => {
-            fastify.log.info(`Creating a new post`)
+            fastify.log.info(`Creating a new post`, postData)
             // This will use the MOCK `transactions` in our test,
             // and the REAL `transactions` in our live application.
             const post = fastify.transactions.posts.create(postData)
+            fastify.log.info(`Post created successfully`, post)
             return post
         },
         getAll: async () => {
