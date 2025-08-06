@@ -1,7 +1,8 @@
 import Fastify from "fastify"
-import { databasePlugin } from "./core/database/database.plugin"
-import { postsRoutes } from "./modules/posts/posts.routes"
-import { reelsRoutes } from "./modules/reels"
+import { databasePlugin } from "src/core/database"
+import { postsRoutes, reelsRoutes, taggedRoutes } from "./modules"
+import { storiesRoutes } from "./modules/stories/stories.routes"
+import { highlightRoutes } from "./modules/highlights"
 
 const fastify = Fastify({
     logger: true,
@@ -13,6 +14,9 @@ fastify.register(databasePlugin)
 // Register routes
 fastify.register(postsRoutes)
 fastify.register(reelsRoutes)
+fastify.register(taggedRoutes)
+fastify.register(storiesRoutes)
+fastify.register(highlightRoutes)
 
 // Declare a default route
 fastify.get("/", function (request, reply) {
