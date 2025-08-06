@@ -12,7 +12,7 @@ export const reelSchema = z.object({
     thumbnail_url: z.string().url(),
     caption: z.string().nullable(),
     views: z.number(),
-    created_at: z.string(), // SQLite returns DATETIME as a string by default
+    created_at: z.string(),
 })
 
 export const reelsSchema = z.array(reelSchema)
