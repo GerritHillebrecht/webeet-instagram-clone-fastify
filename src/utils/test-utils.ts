@@ -19,6 +19,20 @@ export const createMockTransactionHelpers = (
             getAll: jest.fn(),
             create: jest.fn(),
         },
+        tagged: {
+            getTaggedPostsByUserId: jest.fn(),
+            createTaggedPost: jest.fn(),
+        },
+        stories: {
+            getStoriesByUserId: jest.fn(),
+            getAll: jest.fn(),
+            create: jest.fn(),
+            connectStoryToPost: jest.fn(),
+        },
+        highlights: {
+            getHighlightsByUserId: jest.fn(),
+            create: jest.fn(),
+        },
     }
 
     // Deep merge der overrides
@@ -30,6 +44,18 @@ export const createMockTransactionHelpers = (
         reels: {
             ...defaultMock.reels,
             ...overrides.reels,
+        },
+        tagged: {
+            ...defaultMock.tagged,
+            ...overrides.tagged,
+        },
+        stories: {
+            ...defaultMock.stories,
+            ...overrides.stories,
+        },
+        highlights: {
+            ...defaultMock.highlights,
+            ...overrides.highlights,
         },
     }
 }
