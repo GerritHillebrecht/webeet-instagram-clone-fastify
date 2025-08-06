@@ -1,24 +1,25 @@
 import type { Database } from "better-sqlite3"
+import { CreateHighlightDto } from "src/modules/highlights"
 import { CreatePostDto } from "src/modules/posts"
 import { CreateReelDto } from "src/modules/reels"
+import { CreateStoryDto } from "src/modules/stories"
+import {
+    createHighlightStatements,
+    createPostStatements,
+    createReelStatements,
+    createStoriesStatements,
+    createTaggedStatements,
+} from "./statements"
 
 // This factory function creates and returns our transaction helpers.
-const createTransactionHelpers = (db: Database) => {
+export const createTransactionHelpers = (db: Database) => {
     // We use prepared statements for security and performance.
     const statements = {
-        // POSTS
-        getPostById: db.prepare("SELECT * FROM posts WHERE id = ?"),
-        getAllPosts: db.prepare("SELECT * FROM posts"),
-        createPost: db.prepare(
-            "INSERT INTO posts (img_url, caption) VALUES (@img_url, @caption) RETURNING *"
-        ),
-
-        // REELS
-        getReelById: db.prepare("SELECT * FROM reels WHERE id = ?"),
-        getAllReels: db.prepare("SELECT * FROM reels"),
-        createReel: db.prepare(
-            "INSERT INTO reels (video_url, thumbnail_url, caption) VALUES (@video_url, @thumbnail_url, @caption) RETURNING *"
-        ),
+        ...createPostStatements(db),
+        ...createReelStatements(db),
+        ...createTaggedStatements(db),
+        ...createStoriesStatements(db),
+        ...createHighlightStatements(db),
     }
 
     const posts = {
@@ -45,11 +46,59 @@ const createTransactionHelpers = (db: Database) => {
         },
     }
 
+    const tagged = {
+        getTaggedPostsByUserId: (id: number) => {
+            return statements.getTaggedPostsByUserId.get(id)
+        },
+        createTaggedPost: (postId: number, userId: number) => {
+            return statements.createTaggedPost.get({
+                post_id: postId,
+                user_id: userId,
+            })
+        },
+    }
+
+    const stories = {
+        getStoriesByUserId: (userId: number) => {
+            return statements.getStoriesByUserId.all(userId)
+        },
+        getAll: () => {
+            return statements.getAllStories.all()
+        },
+        create: (storyData: CreateStoryDto) => {
+            const { title, content, user_id, is_highlight = false } = storyData
+
+            return statements.createStory.get({
+                title,
+                content,
+                user_id,
+                is_highlight: is_highlight ? 1 : 0, // Convert boolean to integer
+            })
+        },
+        connectStoryToPost: (storyId: number, postId: number) => {
+            return statements.connectStoryToPost.get({
+                story_id: storyId,
+                post_id: postId,
+            })
+        },
+    }
+
+    const highlights = {
+        getHighlightsByUserId: (userId: number) => {
+            return statements.getHightlightsByUserId.all(userId)
+        },
+        create: (highlightData: CreateHighlightDto) => {
+            return statements.createHighlight.get(highlightData)
+        },
+    }
+
     return {
         posts,
         reels,
+        tagged,
+        stories,
+        highlights,
     }
 }
 
 export type TransactionHelpers = ReturnType<typeof createTransactionHelpers>
-export { createTransactionHelpers }
