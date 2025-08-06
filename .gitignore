@@ -7,6 +7,10 @@ npm-debug.log*
 .env
 .env.*
 
+# Build output
+build
+dist
+
 # Runtime data
 pids
 *.pid
