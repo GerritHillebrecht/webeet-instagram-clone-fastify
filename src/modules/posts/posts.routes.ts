@@ -1,8 +1,14 @@
-import type { FastifyInstance, FastifyPluginAsync } from "fastify"
+import type {
+    FastifyInstance,
+    FastifyPluginAsync,
+    FastifyRequest,
+} from "fastify"
 import { postsService } from "./posts.service"
 import { CreatePostDto } from "./posts.types"
 
-const postsRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
+export const postsRoutes: FastifyPluginAsync = async (
+    fastify: FastifyInstance
+) => {
     const service = postsService(fastify)
 
     fastify.get("/posts", async (request, reply) => {
@@ -12,6 +18,22 @@ const postsRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
         return reply.code(200).send(posts)
     })
 
+    fastify.get(
+        "/posts/:post_id",
+        async (
+            request: FastifyRequest<{ Params: { post_id: string } }>,
+            reply
+        ) => {
+            const post = await service.getById(Number(request.params.post_id))
+
+            if (!post) {
+                return reply.code(404).send({ message: "Post not found" })
+            }
+
+            return reply.code(200).send(post)
+        }
+    )
+
     fastify.post<{ Body: CreatePostDto }>("/posts", async (request, reply) => {
         const newPost = await service.create(request.body)
 
@@ -19,5 +41,3 @@ const postsRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
         return reply.code(201).send(newPost)
     })
 }
-
-export { postsRoutes }

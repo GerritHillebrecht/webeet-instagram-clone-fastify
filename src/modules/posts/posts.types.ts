@@ -3,14 +3,14 @@ import { z } from "zod"
 // First, we define the zod schemas
 export const createPostDtoSchema = z.object({
     img_url: z.string().url(),
-    caption: z.string().nullable().optional(), // Caption can be a string, null, or undefined
+    caption: z.string().nullable().optional(),
 })
 
 export const postSchema = z.object({
     id: z.number(),
     img_url: z.string().url(),
     caption: z.string().nullable(),
-    created_at: z.string(), // SQLite returns DATETIME as a string by default
+    created_at: z.string(),
 })
 
 // This will be useful for validating the response from the `GET /posts` endpoint.

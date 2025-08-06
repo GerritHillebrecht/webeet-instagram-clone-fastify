@@ -1,7 +1,7 @@
 import type { FastifyInstance } from "fastify"
 import { CreatePostDto } from "./posts.types"
 
-const postsService = (fastify: FastifyInstance) => {
+export const postsService = (fastify: FastifyInstance) => {
     return {
         create: async (postData: CreatePostDto) => {
             fastify.log.info(`Creating a new post`, postData)
@@ -27,5 +27,3 @@ const postsService = (fastify: FastifyInstance) => {
         },
     }
 }
-
-export { postsService }
