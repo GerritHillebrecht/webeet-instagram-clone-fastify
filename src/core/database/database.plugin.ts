@@ -14,7 +14,7 @@ declare module "fastify" {
 }
 
 async function databasePluginHelper(fastify: FastifyInstance) {
-    const db = new Database("./database.db")
+    const db = new Database(process.env.DATABASE_URL || "./database.db")
     fastify.log.info("SQLite database connection established.")
 
     // Create a simple table for testing if it doesn't exist
