@@ -29,7 +29,7 @@ export const taggedRoutes: FastifyPluginAsync = async (
             )
 
             // Return a 200 OK status code with the list of posts
-            return reply.code(200).send(taggedPosts)
+            return reply.code(200).send(taggedPosts ?? [])
         }
     )
 
