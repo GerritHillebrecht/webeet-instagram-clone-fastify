@@ -7,6 +7,13 @@ npm-debug.log*
 .env
 .env.*
 
+# Upload Folder
+/public/uploads
+
+# Build output
+build
+dist
+
 # Runtime data
 pids
 *.pid
