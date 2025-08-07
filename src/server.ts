@@ -1,6 +1,6 @@
 import Fastify, { FastifyReply, FastifyRequest } from "fastify"
 import path from "path"
-import { databasePlugin } from "src/core/database"
+import { databasePlugin } from "./core/database"
 import { postsRoutes, reelsRoutes, taggedRoutes } from "./modules"
 import { highlightRoutes } from "./modules/highlights"
 import { storiesRoutes } from "./modules/stories/stories.routes"
