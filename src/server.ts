@@ -1,19 +1,13 @@
-import Fastify from "fastify"
+import Fastify, { FastifyReply, FastifyRequest } from "fastify"
+import path from "path"
 import { databasePlugin } from "src/core/database"
 import { postsRoutes, reelsRoutes, taggedRoutes } from "./modules"
 import { highlightRoutes } from "./modules/highlights"
 import { storiesRoutes } from "./modules/stories/stories.routes"
-import path from "path"
-
 import multipart from "@fastify/multipart"
 import fastifyStatic from "@fastify/static"
-import { v2 as cloudinary } from "cloudinary"
 
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-})
+import "./env"
 
 const fastify = Fastify({
     logger: true,
@@ -46,11 +40,18 @@ fastify.get("/", function (request, reply) {
     reply.send({ hello: "world" })
 })
 
-const port = (process.env.PORT || 3000) as number
+if (require.main === module) {
+    const port = (process.env.PORT || 3000) as number
 
-fastify.listen({ port }, function (err, address) {
-    if (err) {
-        fastify.log.error(err)
-        process.exit(1)
-    }
-})
+    fastify.listen({ port }, function (err, address) {
+        if (err) {
+            fastify.log.error(err)
+            process.exit(1)
+        }
+    })
+}
+
+export default async (req: FastifyRequest, res: FastifyReply) => {
+    await fastify.ready()
+    fastify.server.emit("request", req, res)
+}
