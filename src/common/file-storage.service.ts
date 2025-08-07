@@ -4,6 +4,12 @@ import { v4 as uuid } from "uuid"
 import { v2 as cloudinary } from "cloudinary"
 import { Readable } from "stream"
 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+})
+
 export const fileStorageService = {
     async saveImage(
         fileBuffer: Buffer,
@@ -27,7 +33,6 @@ export const fileStorageService = {
         originalFilename: string
     ): Promise<string> {
         return new Promise((resolve, reject) => {
-            // Cloudinary kann den Dateityp (Image, Video) automatisch erkennen
             const uploadStream = cloudinary.uploader.upload_stream(
                 { resource_type: "auto" }, // Wichtig: 'auto' erkennt den Typ
                 (error, result) => {
@@ -47,10 +52,9 @@ export const fileStorageService = {
                 }
             )
 
-            // Erstelle einen Stream aus dem Puffer und pipe ihn an Cloudinary
             const readableStream = new Readable()
             readableStream.push(fileBuffer)
-            readableStream.push(null) // Signalisiert das Ende des Streams
+            readableStream.push(null)
             readableStream.pipe(uploadStream)
         })
     },
