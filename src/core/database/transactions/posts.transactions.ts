@@ -1,4 +1,4 @@
-import { CreatePostDto } from "src/modules"
+import { CreatePostDto } from "../../../modules"
 
 export function postTransactions(
     statements: Record<string, Record<string, (key?: unknown) => unknown>>

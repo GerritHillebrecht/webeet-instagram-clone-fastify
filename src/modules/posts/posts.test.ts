@@ -1,6 +1,6 @@
 import Fastify from "fastify"
 import { postsRoutes } from "./posts.routes"
-import { createMockTransactionHelpers } from "src/utils/test-utils"
+import { createMockTransactionHelpers } from "../../utils/test-utils"
 
 describe("POST ROUTES", () => {
     let app: ReturnType<typeof Fastify>

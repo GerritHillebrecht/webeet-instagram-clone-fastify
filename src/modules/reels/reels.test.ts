@@ -1,6 +1,6 @@
 import Fastify from "fastify"
 import { reelsRoutes } from "./reels.routes"
-import { createMockTransactionHelpers } from "src/utils/test-utils"
+import { createMockTransactionHelpers } from "../../utils/test-utils"
 
 describe("GET /reels/grid", () => {
     it("should return a list of reels with a 200 status code", async () => {

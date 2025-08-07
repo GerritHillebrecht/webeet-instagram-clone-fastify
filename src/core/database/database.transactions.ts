@@ -1,8 +1,8 @@
 import type { Database } from "better-sqlite3"
-import { CreateHighlightDto } from "src/modules/highlights"
-import { CreatePostDto } from "src/modules/posts"
-import { CreateReelDto } from "src/modules/reels"
-import { CreateStoryDto } from "src/modules/stories"
+import { CreateHighlightDto } from "../../modules/highlights"
+import { CreatePostDto } from "../../modules/posts"
+import { CreateReelDto } from "../../modules/reels"
+import { CreateStoryDto } from "../../modules/stories"
 import {
     createHighlightStatements,
     createPostStatements,

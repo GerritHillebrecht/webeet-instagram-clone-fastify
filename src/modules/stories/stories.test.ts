@@ -1,6 +1,6 @@
 import Fastify from "fastify"
 import { storiesRoutes } from "./stories.routes"
-import { createMockTransactionHelpers } from "src/utils/test-utils"
+import { createMockTransactionHelpers } from "../../utils/test-utils"
 
 describe("STORIES ROUTES", () => {
     let app: ReturnType<typeof Fastify>

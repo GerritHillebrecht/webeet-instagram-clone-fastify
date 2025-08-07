@@ -1,6 +1,6 @@
 import Fastify from "fastify"
 import { taggedRoutes } from "./tagged.routes"
-import { createMockTransactionHelpers } from "src/utils/test-utils"
+import { createMockTransactionHelpers } from "../../utils/test-utils"
 
 describe("TAGGED ROUTES", () => {
     let app: ReturnType<typeof Fastify>

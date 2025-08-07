@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify"
 import { CreatePostDto, CreatePostDtoWithMedia } from "./posts.types"
-import { fileStorageService } from "src/common"
+import { fileStorageService } from "../../common"
 
 export const postsService = (fastify: FastifyInstance) => {
     return {
