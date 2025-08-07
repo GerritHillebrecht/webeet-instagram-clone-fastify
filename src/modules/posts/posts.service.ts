@@ -11,7 +11,7 @@ export const postsService = (fastify: FastifyInstance) => {
 
             if (postData.imageFile) {
                 // If an image is provided, save it and get the URL
-                img_url = await fileStorageService.saveImage(
+                img_url = await fileStorageService.saveMedia(
                     postData.imageFile.buffer as Buffer,
                     postData.imageFile.filename
                 )
