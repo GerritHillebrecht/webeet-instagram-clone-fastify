@@ -71,4 +71,4 @@ profile*
 # SQLite database files
 *.sqlite
 *.sqlite3
-*.db
+
